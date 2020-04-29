@@ -84,8 +84,9 @@ public class Myframe extends JFrame implements ActionListener , Runnable{
 	}
 	
 	void placeAndConfigComponent() {
+		this.getContentPane().setBackground(Color.lightGray);
 		this.setLayout(null);
-		setBounds(0, 0, 1210, 700);
+		setBounds(100, 50, 1210, 700);
 		cbox.setBackground(Color.white);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		valueOfn.setBounds(0, 0, 20, 30);
