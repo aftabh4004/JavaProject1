@@ -15,8 +15,6 @@ public class SortingAlgo {
 					swapit(arr , j  , j+1 , f);
 				}	
 			}
-			
-
 		}
 		
 		for (Integer i:arr) {
@@ -34,30 +32,6 @@ public class SortingAlgo {
 			int m = (l+r)/2; 
 			mergsort(arr, l, m ,f); 
 			mergsort(arr , m+1, r , f); 
-			// Sort first and second halves 
-			/*t1 =  new Thread(new Runnable() {
-				public void run() {
-					
-				}
-			});
-			t1.start();
-					
-			
-			 t2 = new Thread(new Runnable() {
-				public void run() {
-					
-				}
-			});
-			t2.start();
-			 
-			 try {
-			 this.t1.join();
-			 this.t2.join();
-			 }catch(InterruptedException e) {
-				 System.out.println(e);
-			 }*/
-			 
-			// Merge the sorted halves 
 			merge(arr, l, m, r ,f); 
 		} 
 	}
@@ -117,7 +91,6 @@ public class SortingAlgo {
 	
 	void swapit(Integer[] arr  , int i , int j , Myframe f){
 		f.swap(i*f.w , arr[i] , j*f.w , arr[j]);
-		//System.out.println("i = " + i +  " j = " + j);
 		Integer temp = arr[i];
 		arr[i] = arr[j];
 		arr[j] = temp;
@@ -128,7 +101,7 @@ public class SortingAlgo {
 		f.h = val;
 		
 		f.col = Color.green;
-		f.jf.paintImmediately(0, 0, 800, 300);
+		f.jp1.paintImmediately(0, 0, f.pw, f.ph);
 		try {
 			Thread.sleep(30);
 		}catch(InterruptedException e) {
@@ -136,12 +109,12 @@ public class SortingAlgo {
 		}
 		f.h = 300;
 		f.col = Color.black;
-		f.jf.paintImmediately(0, 0, 800, 300);
+		f.jp1.paintImmediately(0, 0, f.pw, f.ph);
 		
 		
 		f.h = val;
 		f.col = Color.white;
-		f.jf.paintImmediately(0, 0, 800, 300);
+		f.jp1.paintImmediately(0, 0, f.pw, f.ph);
 		
 	}
 }

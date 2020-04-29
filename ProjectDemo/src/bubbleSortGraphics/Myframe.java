@@ -14,9 +14,9 @@ import sun.security.jca.GetInstance;
 public class Myframe extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
+	final int pw = 600 ,  ph = 300 , fw = 1210, fh = 700;
 	int x = 0 , w , h , c = 0 , n;
 	Scanner scan = null;
-	boolean flag = false;
 	Image offimage;
     Graphics offg ;
     Color col;
@@ -25,25 +25,45 @@ public class Myframe extends JFrame implements ActionListener {
 	ArrayList<Integer> ar = new ArrayList<Integer>();
 	Integer[] arr;
 	
-	
-    JPanel jf;
+	MyPanel jp1 , jp2 , jp3 , jp4;
 	JComboBox cbox;
 	JLabel jlabel , valueOfn;
-	JButton button , start , fetch;
+	JButton suffel , start , fetch;
 	JTextField jt; 
 	
 	Myframe(){
 		arr = new Integer[ar.size()]; 
 	    arr = ar.toArray(arr);
 		createComponent();
+		colorPanel();
 		placeAndConfigComponent();
 		addComponent();
 		addActionListeners(); 
+		
 	}
 	
+	void colorPanel() {
+		x = 0;
+		w = pw;
+		h = ph;
+		col = Color.BLACK;
+		jp1.paintImmediately(0, 0, pw, ph);
+		jp2.paintImmediately(0, 0, pw, ph);
+		jp3.paintImmediately(0, 0, pw, ph);
+		jp4.paintImmediately(0, 0, pw, ph);
+		
+	}
 	void createComponent() {
-		jf = new JPanel();
-		button = new JButton("Suffel");
+		jp1 = new MyPanel(this);
+		jp2 = new MyPanel(this);
+		jp3 = new MyPanel(this);
+		jp4 = new MyPanel(this);
+		/*
+		jp1 = new MyPanel();
+		jp2 = new MyPanel();
+		jp3 = new MyPanel();
+		jp4 = new MyPanel();*/
+		suffel = new JButton("Suffel");
 		start = new JButton("Start");
 		fetch = new JButton("Fetch");
 		jlabel = new JLabel("Choose any Sorting Algorithm   ");
@@ -59,32 +79,45 @@ public class Myframe extends JFrame implements ActionListener {
 		add(jlabel);
 		add(cbox);
 		add(start);
-		add(button);
-		this.add(jf);
+		add(suffel);
+		this.add(jp1);
+		this.add(jp2);
+		this.add(jp3);
+		this.add(jp4);
+		
 	}
 	
 	void placeAndConfigComponent() {
 		this.setLayout(null);
+		setBounds(0, 0, 1210, 700);
+		cbox.setBackground(Color.white);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		valueOfn.setBounds(0, 0, 20, 30);
 		jt.setBounds(25, 0, 100, 30);
 		fetch.setBounds(130, 0, 100, 30);
 		jlabel.setBounds(235, 0, 230, 30);
 		cbox.setBounds(465, 0, 100, 30);
 		start.setBounds(570, 0, 100, 30);
-		button.setBounds(675, 0, 100, 30);
-		jf.setBounds(0, 30, 800, 300);
-		setBounds(0, 0, 800, 600);
-		cbox.setBackground(Color.white);
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    jf.setBackground(Color.black);
-	    jf.setVisible(true);
+		suffel.setBounds(675, 0, 100, 30);
+		jp1.setBounds(0, 30, 600, 300);
+		jp1.setBackground(Color.black);
+	    jp2.setVisible(true);
+	    jp2.setBounds(0, 350, 600, 300);
+	    jp2.setBackground(Color.black);
+	    jp2.setVisible(true);
+	    jp3.setBounds(610, 30, 600, 300);
+	    jp3.setBackground(Color.black);
+	    jp3.setVisible(true);
+	    jp4.setBounds(610 ,350, 600, 300);
+	    jp4.setBackground(Color.black);
+	    jp4.setVisible(true);
 	    this.setVisible(true);
 	}
 	
 	void addActionListeners() {
 		cbox.addActionListener(this);
 	    start.addActionListener(this);
-	    button.addActionListener(this);
+	    suffel.addActionListener(this);
 	    fetch.addActionListener(this);
 	}
 	
@@ -92,12 +125,9 @@ public class Myframe extends JFrame implements ActionListener {
 		Myframe cur= this;
 		sort = new SortingAlgo();
 		
-		if(e.getSource() == button || e.getSource() == fetch) {
+		if(e.getSource() == suffel || e.getSource() == fetch) {
 			n = Integer.parseInt(jt.getText());
-			w = 800/n;
-			flag = true;
-			jf.paintImmediately(0 , 0 , 800 , 300);
-			flag = false;
+			w = 600/n;
 			jumble();
 			arr = ar.toArray(arr);
 			paintCaller();
@@ -121,7 +151,7 @@ public class Myframe extends JFrame implements ActionListener {
 		for(i = 0 ; i < arr.length - 1; i++) {
 			if(arr[i] <= arr[i+1]) {
 				h = arr[i];
-				jf.paintImmediately(0, 0, 800, 300);
+				jp1.paintImmediately(0, 0, 800, 300);
 				try {
 					Thread.sleep(30);			
 				}
@@ -134,7 +164,7 @@ public class Myframe extends JFrame implements ActionListener {
 			x += w;
 		}
 		h = arr[i];
-		jf.paintImmediately(0, 0, 800, 300);
+		jp1.paintImmediately(0, 0, pw, ph);
 	}
 	
 	void jumble() {
@@ -154,11 +184,11 @@ public class Myframe extends JFrame implements ActionListener {
 		x = x1;
 		h = y1;
 		col = Color.green;
-		jf.paintImmediately(0, 0, 800, 300);
+		jp1.paintImmediately(0, 0, pw, ph);
 		//repaint();
 		x = x2;
 		h = y2;
-		jf.paintImmediately(0, 0, 800, 300);
+		jp1.paintImmediately(0, 0, pw, ph);
 		
 		try {
 			Thread.sleep(30);			
@@ -169,18 +199,18 @@ public class Myframe extends JFrame implements ActionListener {
 		col = Color.black;
 		h = 300;
 		x = x1;
-		jf.paintImmediately(0, 0, 800, 300);
+		jp1.paintImmediately(0, 0, pw, ph);
 		x = x2;
-		jf.paintImmediately(0, 0, 800, 300);
+		jp1.paintImmediately(0, 0, pw, ph);
 
 		col = Color.white;
 		x = x1 ;
 		h = y2;
-		jf.paintImmediately(0, 0, 800, 300);
+		jp1.paintImmediately(0, 0, pw, ph);
 		
 		x = x2 ;
 		h = y1;
-		jf.paintImmediately(0, 0, 800, 300);
+		jp1.paintImmediately(0, 0, pw, ph);
 			
 		
 	}
@@ -206,14 +236,12 @@ public class Myframe extends JFrame implements ActionListener {
 		try {
 			//System.out.println(Thread.currentThread().getName());
 			for(int data : ar) {
-				
-
 				h = data;
 				col = Color.red;
-				jf.paintImmediately(0, 0, 800, 300);
+				jp1.paintImmediately(0, 0, pw, ph);
 				Thread.sleep(30);
 				col = Color.white;
-				jf.paintImmediately(0, 0, 800, 300);
+				jp1.paintImmediately(0, 0, pw, ph);
 				x += w;
 			}
 		}
@@ -222,24 +250,13 @@ public class Myframe extends JFrame implements ActionListener {
 		}
 	}
 	
-		public void paint(Graphics g) {
-			if (flag) {
-				x = 0;
-				h = 300;
-				w = 800;
-				col = Color.black;
-				update(g);
-				w = 800/n;
-			}
-			else
-				update(g);
-		}
+		
 	
 	
 	public void update(Graphics g) {
 		
 		if (offimage == null) {
-	        offimage = jf.createImage(getWidth(), getHeight());
+	        offimage = jp1.createImage(getWidth(), getHeight());
 	        offg = offimage.getGraphics();
 	    }
 	    Graphics2D g2d = (Graphics2D)offg;
@@ -249,7 +266,7 @@ public class Myframe extends JFrame implements ActionListener {
 		g2d.setColor(col);
 		g2d.fillRect(x, 0, w, h);
 		
-		g.drawImage(offimage, 0, 0, this);
+		g.drawImage(offimage, 0, 0, jp1);
 	}
 	public static void main(String[] args) {
 		new Myframe();
