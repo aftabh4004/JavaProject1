@@ -29,40 +29,54 @@ public class Myframe extends JPanel implements ActionListener {
     Graphics offg ;
     Color col;
     SortingAlgo sort;
+    
 	Myframe(){
-		  //fetchData();
-		 // jumble();
-		  arr = new Integer[ar.size()]; 
-	      arr = ar.toArray(arr);
-		  jf = new JFrame();
-		  jlabel = new JLabel("Choose any Sorting Algorithm   ");
-		  valueOfn = new JLabel("N ");
-		  jf.setLayout(new FlowLayout());
-		  button = new JButton("Suffel");
-		  start = new JButton("Start");
-		  fetch = new JButton("Fetch");
-		  jt = new JTextField(10);
-		  cbox = new JComboBox(str);
-		  cbox.setBackground(Color.white);
-		  jf.add(valueOfn);
-		  jf.add(jt);
-		  jf.add(fetch);
-		  jf.add(jlabel);
-		  jf.add(cbox);
-		  jf.add(start);
-		  jf.add(button);
-	      jf.setPreferredSize(new Dimension(800, 300));
-		  setPreferredSize(new Dimension(800, 250));
-		  jf.add(this);
-	      jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	      jf.setBackground(Color.black);
-	      jf.pack();
-	      jf.setVisible(true);
-	      //paintCaller(); 
-	      cbox.addActionListener(this);
-	      start.addActionListener(this);
-	      button.addActionListener(this);
-	      fetch.addActionListener(this);
+		arr = new Integer[ar.size()]; 
+	    arr = ar.toArray(arr);
+		createComponent();
+		addComponent();
+		placeAndConfigComponent();
+		addActionListeners(); 
+	}
+	
+	void createComponent() {
+		jf = new JFrame();
+		button = new JButton("Suffel");
+		start = new JButton("Start");
+		fetch = new JButton("Fetch");
+		jlabel = new JLabel("Choose any Sorting Algorithm   ");
+		valueOfn = new JLabel("N ");
+		jt = new JTextField(10);
+		cbox = new JComboBox(str);
+	}
+	
+	void addComponent() {
+		jf.add(valueOfn);
+		jf.add(jt);
+		jf.add(fetch);
+		jf.add(jlabel);
+		jf.add(cbox);
+		jf.add(start);
+		jf.add(button);
+		jf.add(this);
+	}
+	
+	void placeAndConfigComponent() {
+		jf.setLayout(new FlowLayout());
+		jf.setPreferredSize(new Dimension(800, 300));
+		setPreferredSize(new Dimension(800, 250));
+		cbox.setBackground(Color.white);
+	    jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    jf.setBackground(Color.black);
+	    jf.pack();
+	    jf.setVisible(true);
+	}
+	
+	void addActionListeners() {
+		cbox.addActionListener(this);
+	    start.addActionListener(this);
+	    button.addActionListener(this);
+	    fetch.addActionListener(this);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
