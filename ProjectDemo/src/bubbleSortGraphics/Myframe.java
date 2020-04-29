@@ -11,19 +11,24 @@ import sun.security.jca.GetInstance;
 
 
 
-public class Myframe extends JFrame implements ActionListener {
+public class Myframe extends JFrame implements ActionListener , Runnable{
 	private static final long serialVersionUID = 1L;
 	
-	final int pw = 600 ,  ph = 300 , fw = 1210, fh = 700;
-	int x = 0 , w , h , c = 0 , n;
+	final int pw = 600 ,  ph = 300 , fw = 1210, fh = 700 ;
+	int n;
+	//int x = 0 , w , h , c = 0 ;
 	Scanner scan = null;
 	Image offimage;
     Graphics offg ;
     Color col;
-    SortingAlgo sort;
+    SortingAlgo sort1;
+    SortingAlgo sort2;
+    SortingAlgo sort3;
+    SortingAlgo sort4;
     String[] str = {"Bubbel Sort" , "Merg Sort"};
 	ArrayList<Integer> ar = new ArrayList<Integer>();
-	Integer[] arr;
+	Integer[] arr1 , arr2 , arr3 , arr4;
+	Thread t1 , t2 , t3 , t4;
 	
 	MyPanel jp1 , jp2 , jp3 , jp4;
 	JComboBox cbox;
@@ -32,37 +37,28 @@ public class Myframe extends JFrame implements ActionListener {
 	JTextField jt; 
 	
 	Myframe(){
-		arr = new Integer[ar.size()]; 
-	    arr = ar.toArray(arr);
+		t1 = new Thread(this , "t1");
+		t2 = new Thread(this , "t2");
+		t3 = new Thread(this , "t3");
+		t4 = new Thread(this , "t4");
+		arr1 = new Integer[ar.size()];
+		arr2 = new Integer[ar.size()];
+		arr3 = new Integer[ar.size()];
+		arr4 = new Integer[ar.size()];
 		createComponent();
-		colorPanel();
 		placeAndConfigComponent();
 		addComponent();
 		addActionListeners(); 
 		
 	}
 	
-	void colorPanel() {
-		x = 0;
-		w = pw;
-		h = ph;
-		col = Color.BLACK;
-		jp1.paintImmediately(0, 0, pw, ph);
-		jp2.paintImmediately(0, 0, pw, ph);
-		jp3.paintImmediately(0, 0, pw, ph);
-		jp4.paintImmediately(0, 0, pw, ph);
-		
-	}
+	
 	void createComponent() {
 		jp1 = new MyPanel(this);
 		jp2 = new MyPanel(this);
 		jp3 = new MyPanel(this);
 		jp4 = new MyPanel(this);
-		/*
-		jp1 = new MyPanel();
-		jp2 = new MyPanel();
-		jp3 = new MyPanel();
-		jp4 = new MyPanel();*/
+		
 		suffel = new JButton("Suffel");
 		start = new JButton("Start");
 		fetch = new JButton("Fetch");
@@ -122,49 +118,36 @@ public class Myframe extends JFrame implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		Myframe cur= this;
-		sort = new SortingAlgo();
-		
+		sort1 = new SortingAlgo();
+		sort2 = new SortingAlgo();
+		sort3 = new SortingAlgo();
+		sort4 = new SortingAlgo();
 		if(e.getSource() == suffel || e.getSource() == fetch) {
 			n = Integer.parseInt(jt.getText());
-			w = 600/n;
+			set_n();
 			jumble();
-			arr = ar.toArray(arr);
-			paintCaller();
+			arr1 = ar.toArray(arr1);
+			arr2 = ar.toArray(arr2);
+			arr3 = ar.toArray(arr3);
+			arr4 = ar.toArray(arr4);
+			t1.start();
+			t2.start();
+			t3.start();
+			t4.start();
 		}
 		else if (e.getSource() == start) {
-			if(cbox.getSelectedIndex() == 0) {
-				sort.bubblesort(arr , cur);
-			}
-			else if(cbox.getSelectedIndex() == 1) {
-				sort.mergsort(arr, 0, arr.length - 1 , cur);
-			}
-	    
-		checkit();
+				sort1.bubblesort(arr1 , jp1);
+				sort2.mergsort(arr2, 0, arr2.length - 1 , jp2);
+				sort3.bubblesort(arr3 , jp3);
+				sort4.mergsort(arr4, 0, arr2.length - 1 , jp4);
 	}
 	}
 	
-	void checkit() {
-		x = 0;
-		int i;
-		col = Color.yellow;
-		for(i = 0 ; i < arr.length - 1; i++) {
-			if(arr[i] <= arr[i+1]) {
-				h = arr[i];
-				jp1.paintImmediately(0, 0, 800, 300);
-				try {
-					Thread.sleep(30);			
-				}
-				catch(InterruptedException e) {
-					System.out.println(i);
-				}
-			}else {
-				return;
-			}
-			x += w;
-		}
-		h = arr[i];
-		jp1.paintImmediately(0, 0, pw, ph);
+	void set_n() {
+		jp1.set_n(n);
+		jp2.set_n(n);
+		jp3.set_n(n);
+		jp4.set_n(n);
 	}
 	
 	void jumble() {
@@ -178,43 +161,6 @@ public class Myframe extends JFrame implements ActionListener {
 		}
 				
 	}
-	
-	void swap(int x1 ,int y1 , int x2 , int y2) {
-	
-		x = x1;
-		h = y1;
-		col = Color.green;
-		jp1.paintImmediately(0, 0, pw, ph);
-		//repaint();
-		x = x2;
-		h = y2;
-		jp1.paintImmediately(0, 0, pw, ph);
-		
-		try {
-			Thread.sleep(30);			
-		}
-		catch(InterruptedException i) {
-			System.out.println(i);
-		}
-		col = Color.black;
-		h = 300;
-		x = x1;
-		jp1.paintImmediately(0, 0, pw, ph);
-		x = x2;
-		jp1.paintImmediately(0, 0, pw, ph);
-
-		col = Color.white;
-		x = x1 ;
-		h = y2;
-		jp1.paintImmediately(0, 0, pw, ph);
-		
-		x = x2 ;
-		h = y1;
-		jp1.paintImmediately(0, 0, pw, ph);
-			
-		
-	}
-	
 	void fetchData() {
 		
 		try {
@@ -231,43 +177,30 @@ public class Myframe extends JFrame implements ActionListener {
 			scan.close();
 		}
 	}
+	
+	public void run() {
+		if (Thread.currentThread().getName().equals("t1")) {
+			jp1.paintCaller(arr1 , n);
+			sort1.bubblesort(arr1 , jp1);
+			jp1.checkit(arr1);
+		}
+		else if (Thread.currentThread().getName().equals("t2")){
+			jp2.paintCaller(arr2 , n);
+			sort2.mergsort(arr2, 0, arr2.length - 1 , jp2);
+			jp2.checkit(arr2);
+		}
+		else if (Thread.currentThread().getName().equals("t3")){
+			jp3.paintCaller(arr3 , n);
+			sort3.bubblesort(arr3 , jp3);
+			jp3.checkit(arr3);
+		}		
+		else{
+			jp4.paintCaller(arr4 , n);
+			sort4.mergsort(arr4, 0, arr4.length - 1 , jp4);
+			jp4.checkit(arr4);
+		}	
+	}
 	 
-	public void paintCaller() {
-		try {
-			//System.out.println(Thread.currentThread().getName());
-			for(int data : ar) {
-				h = data;
-				col = Color.red;
-				jp1.paintImmediately(0, 0, pw, ph);
-				Thread.sleep(30);
-				col = Color.white;
-				jp1.paintImmediately(0, 0, pw, ph);
-				x += w;
-			}
-		}
-		catch(InterruptedException i) {
-			System.out.println(i);
-		}
-	}
-	
-		
-	
-	
-	public void update(Graphics g) {
-		
-		if (offimage == null) {
-	        offimage = jp1.createImage(getWidth(), getHeight());
-	        offg = offimage.getGraphics();
-	    }
-	    Graphics2D g2d = (Graphics2D)offg;
-	    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-	                RenderingHints.VALUE_ANTIALIAS_ON);
-		
-		g2d.setColor(col);
-		g2d.fillRect(x, 0, w, h);
-		
-		g.drawImage(offimage, 0, 0, jp1);
-	}
 	public static void main(String[] args) {
 		new Myframe();
 	}
