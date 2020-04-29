@@ -128,7 +128,7 @@ public class SortingAlgo {
 		f.h = val;
 		
 		f.col = Color.green;
-		f.paintImmediately(0, 0, 800, 300);
+		f.jf.paintImmediately(0, 0, 800, 300);
 		try {
 			Thread.sleep(30);
 		}catch(InterruptedException e) {
@@ -136,12 +136,12 @@ public class SortingAlgo {
 		}
 		f.h = 300;
 		f.col = Color.black;
-		f.paintImmediately(0, 0, 800, 300);
+		f.jf.paintImmediately(0, 0, 800, 300);
 		
 		
 		f.h = val;
 		f.col = Color.white;
-		f.paintImmediately(0, 0, 800, 300);
+		f.jf.paintImmediately(0, 0, 800, 300);
 		
 	}
 }

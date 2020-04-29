@@ -11,36 +11,38 @@ import sun.security.jca.GetInstance;
 
 
 
-public class Myframe extends JPanel implements ActionListener {
+public class Myframe extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	int n;
-	JFrame jf;
-	JComboBox cbox;
-	JLabel jlabel , valueOfn;
-	JButton button , start , fetch;
-	JTextField jt; 
-	String[] str = {"Bubbel Sort" , "Merg Sort"};
-	ArrayList<Integer> ar = new ArrayList<Integer>();
-	Integer[] arr;
+	
+	int x = 0 , w , h , c = 0 , n;
 	Scanner scan = null;
-	int x = 0 , w , h , c = 0 ;
 	boolean flag = false;
 	Image offimage;
     Graphics offg ;
     Color col;
     SortingAlgo sort;
-    
+    String[] str = {"Bubbel Sort" , "Merg Sort"};
+	ArrayList<Integer> ar = new ArrayList<Integer>();
+	Integer[] arr;
+	
+	
+    JPanel jf;
+	JComboBox cbox;
+	JLabel jlabel , valueOfn;
+	JButton button , start , fetch;
+	JTextField jt; 
+	
 	Myframe(){
 		arr = new Integer[ar.size()]; 
 	    arr = ar.toArray(arr);
 		createComponent();
-		addComponent();
 		placeAndConfigComponent();
+		addComponent();
 		addActionListeners(); 
 	}
 	
 	void createComponent() {
-		jf = new JFrame();
+		jf = new JPanel();
 		button = new JButton("Suffel");
 		start = new JButton("Start");
 		fetch = new JButton("Fetch");
@@ -51,25 +53,32 @@ public class Myframe extends JPanel implements ActionListener {
 	}
 	
 	void addComponent() {
-		jf.add(valueOfn);
-		jf.add(jt);
-		jf.add(fetch);
-		jf.add(jlabel);
-		jf.add(cbox);
-		jf.add(start);
-		jf.add(button);
-		jf.add(this);
+		add(valueOfn);
+		add(jt);
+		add(fetch);
+		add(jlabel);
+		add(cbox);
+		add(start);
+		add(button);
+		this.add(jf);
 	}
 	
 	void placeAndConfigComponent() {
-		jf.setLayout(new FlowLayout());
-		jf.setPreferredSize(new Dimension(800, 300));
-		setPreferredSize(new Dimension(800, 250));
+		this.setLayout(null);
+		valueOfn.setBounds(0, 0, 20, 30);
+		jt.setBounds(25, 0, 100, 30);
+		fetch.setBounds(130, 0, 100, 30);
+		jlabel.setBounds(235, 0, 230, 30);
+		cbox.setBounds(465, 0, 100, 30);
+		start.setBounds(570, 0, 100, 30);
+		button.setBounds(675, 0, 100, 30);
+		jf.setBounds(0, 30, 800, 300);
+		setBounds(0, 0, 800, 600);
 		cbox.setBackground(Color.white);
-	    jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    jf.setBackground(Color.black);
-	    jf.pack();
 	    jf.setVisible(true);
+	    this.setVisible(true);
 	}
 	
 	void addActionListeners() {
@@ -87,7 +96,7 @@ public class Myframe extends JPanel implements ActionListener {
 			n = Integer.parseInt(jt.getText());
 			w = 800/n;
 			flag = true;
-			paintImmediately(0 , 0 , 800 , 300);
+			jf.paintImmediately(0 , 0 , 800 , 300);
 			flag = false;
 			jumble();
 			arr = ar.toArray(arr);
@@ -112,7 +121,7 @@ public class Myframe extends JPanel implements ActionListener {
 		for(i = 0 ; i < arr.length - 1; i++) {
 			if(arr[i] <= arr[i+1]) {
 				h = arr[i];
-				paintImmediately(0, 0, 800, 300);
+				jf.paintImmediately(0, 0, 800, 300);
 				try {
 					Thread.sleep(30);			
 				}
@@ -125,7 +134,7 @@ public class Myframe extends JPanel implements ActionListener {
 			x += w;
 		}
 		h = arr[i];
-		paintImmediately(0, 0, 800, 300);
+		jf.paintImmediately(0, 0, 800, 300);
 	}
 	
 	void jumble() {
@@ -145,11 +154,11 @@ public class Myframe extends JPanel implements ActionListener {
 		x = x1;
 		h = y1;
 		col = Color.green;
-		paintImmediately(0, 0, 800, 300);
+		jf.paintImmediately(0, 0, 800, 300);
 		//repaint();
 		x = x2;
 		h = y2;
-		paintImmediately(0, 0, 800, 300);
+		jf.paintImmediately(0, 0, 800, 300);
 		
 		try {
 			Thread.sleep(30);			
@@ -160,18 +169,18 @@ public class Myframe extends JPanel implements ActionListener {
 		col = Color.black;
 		h = 300;
 		x = x1;
-		paintImmediately(0, 0, 800, 300);
+		jf.paintImmediately(0, 0, 800, 300);
 		x = x2;
-		paintImmediately(0, 0, 800, 300);
+		jf.paintImmediately(0, 0, 800, 300);
 
 		col = Color.white;
 		x = x1 ;
 		h = y2;
-		paintImmediately(0, 0, 800, 300);
+		jf.paintImmediately(0, 0, 800, 300);
 		
 		x = x2 ;
 		h = y1;
-		paintImmediately(0, 0, 800, 300);
+		jf.paintImmediately(0, 0, 800, 300);
 			
 		
 	}
@@ -201,10 +210,10 @@ public class Myframe extends JPanel implements ActionListener {
 
 				h = data;
 				col = Color.red;
-				paintImmediately(0, 0, 800, 300);
+				jf.paintImmediately(0, 0, 800, 300);
 				Thread.sleep(30);
 				col = Color.white;
-				paintImmediately(0, 0, 800, 300);
+				jf.paintImmediately(0, 0, 800, 300);
 				x += w;
 			}
 		}
