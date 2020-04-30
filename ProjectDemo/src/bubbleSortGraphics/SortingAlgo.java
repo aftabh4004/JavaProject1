@@ -4,14 +4,23 @@ import java.awt.Color;
 
 public class SortingAlgo {
 	
+	int no_of_cmp = 0;
+	int no_of_swap = 0;
+	String algo = null;
+	String tc = null;
+	
 /*****************************************************************************************************************/
 /************************************** Bubble Sort **************************************************************/
 	void bubblesort(Integer[] arr , MyPanel jp) {
+		algo = "Bubble Sort";
+		tc = "Omega(n)	theta(n^2)	O(n^2)";
 
 		//bubble sort
 		for (int i = 1; i < arr.length ; i++) {
 			for (int j = 0 ; j < arr.length - 1; j++) {
+				no_of_cmp++;
 				if (arr[j] > arr[j + 1]) {
+					no_of_swap++;
 					swapit(arr , j  , j+1 , jp);
 				}	
 			}
@@ -26,6 +35,8 @@ public class SortingAlgo {
 	//Recursive method for merge sort 
 	void mergsort(Integer arr[], int l, int r , MyPanel jp) 
 	{ 
+		algo = "Merge Sort";
+		tc = "Omega(n log(n))	theta(n log(n))	O(n log(n))";
 		if (l < r) 
 		{ 
 			// Find the middle point 
@@ -57,6 +68,7 @@ public class SortingAlgo {
 		int k = l; 
 		while (i < n1 && j < n2) 
 		{ 
+			no_of_cmp++;
 			if (L[i] <= R[j]) 
 			{ 
 				arr[k] = L[i]; 
@@ -119,9 +131,14 @@ public class SortingAlgo {
 /************************************** Insertion Sort **************************************************************/
 	
 	void insertion_sort(Integer[] arr , MyPanel jp) {
+		algo = "Insertion Sort";
+		tc = "Omega(n)	theta(n^2)	O(n^2)";
+		
 		for (int i = 1 ; i < arr.length ; i++) {
 			int j = i;
+			no_of_cmp++;
 			while(j > 0 && arr[j -1] > arr[j]) {
+				no_of_swap++;
 				swapit(arr , j - 1 , j , jp);
 				j--;
 			}
@@ -135,15 +152,19 @@ public class SortingAlgo {
 
 	void selection_sort(Integer arr[] , MyPanel jp) 
     { 
+		algo = "Selection Sort";
+		tc = "Omega(n^2)	theta(n^2)	O(n^2)";
         int n = arr.length; 
   
         for (int i = 0; i < n-1; i++) 
         { 
             int min_idx = i; 
-            for (int j = i+1; j < n; j++) 
+            for (int j = i+1; j < n; j++) {
+            	no_of_cmp++;
                 if (arr[j] < arr[min_idx]) 
                     min_idx = j; 
-  
+            }
+         no_of_swap++;
          swapit(arr , min_idx , i , jp);
         } 
     }

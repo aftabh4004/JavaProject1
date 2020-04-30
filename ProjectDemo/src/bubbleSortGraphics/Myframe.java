@@ -5,9 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-
-
-
 public class Myframe extends JFrame implements ActionListener , Runnable{
 	private static final long serialVersionUID = 1L;
 	final int pw = 600 ,  ph = 300 , fw = 1210, fh = 700; // Fixed size of frame and panels
@@ -20,6 +17,7 @@ public class Myframe extends JFrame implements ActionListener , Runnable{
     Integer[] arr1 , arr2 , arr3 , arr4;			//To avoid clashes , since array is mutated during sorting
     Thread t1 , t2 , t3 , t4;						//each thread use to handle each panel
     ArrayList<Integer> ar = new ArrayList<Integer>();
+    FileHandler fhd = null;
 	
 	MyPanel jp1 , jp2 , jp3 , jp4;
 	JLabel  valueOfn , jlab1 , jlab2 , jlab3 , jlab4;
@@ -37,6 +35,25 @@ public class Myframe extends JFrame implements ActionListener , Runnable{
 		addComponent();
 		addActionListeners(); 
 		
+	}
+	String get_arr_String(Integer[] arr){
+		ArrayList<Integer> temp = new ArrayList<>();
+		for(Integer t : arr) {
+			temp.add(t);
+		}
+		return temp.toString();
+	}
+	
+	void writeDataToFile() {
+		fhd = new FileHandler();
+		fhd.openfile();
+		fhd.writeString(ar.toString(), true);
+		fhd.writeSortInstance(sort1);
+		fhd.writeSortInstance(sort2);
+		fhd.writeSortInstance(sort3);
+		fhd.writeSortInstance(sort4);
+		fhd.writeString(get_arr_String(arr1), false);
+		fhd.closeFile();
 	}
 	
 	//Creating thread and SortingAlgo instances
@@ -148,6 +165,10 @@ public class Myframe extends JFrame implements ActionListener , Runnable{
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
+			
+			writeDataToFile();
+			
+			
 		}
 		else if (e.getSource() == reset) {
 			jp1.colorPanel();
@@ -156,6 +177,7 @@ public class Myframe extends JFrame implements ActionListener , Runnable{
 			jp4.colorPanel();
 			jt.setText("");
 		}
+		
 		
 	}
 	
