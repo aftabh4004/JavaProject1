@@ -4,15 +4,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.util.ArrayList;
 
 import javax.swing.*;
 public class MyPanel extends JPanel{
-	final int pw = 600 ,  ph = 300 , fw = 1210, fh = 700;
-	int x = 0 , w , h , c = 0 , n;
+	
+	private static final long serialVersionUID = 1L;
+	final int pw = 600 ,  ph = 300 , fw = 1210, fh = 700; // Fixed size of frame and panels
+	int x = 0 , w , h , c = 0 , n;						//variable used to do stuffs in graphics
 	Myframe f;
-	Image offimage;
-    Graphics offg ;
+	Image offimage;										//back buffer image to do double buffering
+    Graphics offg ;										//graphics to back buffer image
     Color col;
     
 	
@@ -20,6 +21,9 @@ public class MyPanel extends JPanel{
 		colorPanel();
 		this.f = f; 
 	}
+	
+	//Overriding paint 
+	//paint is called by paintImmediately , which is called in methods of SortingAlgo 
 	public void paint(Graphics g) {
 		update(g);
 	}
@@ -29,6 +33,7 @@ public class MyPanel extends JPanel{
 		w = pw/n;
 	}
 	
+	//To Color the full panel once with black color (setBackground was not working i don't know why?)
 	void colorPanel() {
 		x = 0;
 		w = pw;
@@ -36,7 +41,11 @@ public class MyPanel extends JPanel{
 		col = Color.BLACK;
 		paintImmediately(0, 0, pw, ph);
 	}
+	
+	//overriding update
 	public void update(Graphics g) {
+		//doing double buffering ,It refer to drawing stuff onto an image then transfer that image onto panel
+		//this will give a smooth graphics
 		
 		if (offimage == null) {
 	        offimage = createImage(getWidth(), getHeight());
@@ -52,17 +61,19 @@ public class MyPanel extends JPanel{
 		g.drawImage(offimage, 0, 0, this);
 	}
 	
+	
+	//Visualizing swapping 
 	void swap(int x1 ,int y1 , int x2 , int y2 ) {
 		
 		x = x1;
 		h = y1;
 		col = Color.green;
 		paintImmediately(0, 0, pw, ph);
-		//repaint();
 		x = x2;
 		h = y2;
 		paintImmediately(0, 0, pw, ph);
 		
+		//waiting for 30ms
 		try {
 			Thread.sleep(30);			
 		}
@@ -70,7 +81,7 @@ public class MyPanel extends JPanel{
 			System.out.println(i);
 		}
 		col = Color.black;
-		h = 300;
+		h = ph;
 		x = x1;
 		paintImmediately(0, 0, pw, ph);
 		x = x2;
@@ -88,9 +99,9 @@ public class MyPanel extends JPanel{
 		
 	}
 	
+	//Drawing unsorted array on screen
 	public void paintCaller(Integer[] ar , int n) {
 		try {
-			//System.out.println(Thread.currentThread().getName());
 			for(int data : ar) {
 				h = data;
 				col = Color.red;
@@ -106,6 +117,8 @@ public class MyPanel extends JPanel{
 		}
 	}
 	
+	
+	//checking if the array get sorted after sorting is done , if fine color with yellow color
 	void checkit(Integer[] arr) {
 		x = 0;
 		int i;

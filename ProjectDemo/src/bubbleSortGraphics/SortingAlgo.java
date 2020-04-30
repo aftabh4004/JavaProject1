@@ -16,10 +16,6 @@ public class SortingAlgo {
 				}	
 			}
 		}
-		
-		for (Integer i:arr) {
-			System.out.println(i);
-		}
 	}
 	
 /***************************************************************************************************************/
@@ -94,7 +90,7 @@ public class SortingAlgo {
 	} 
 	
 	
-	//for swap in merge sort , because in merge sort there is no any simple swap
+	//for swap in merge sort , because in merge sort there is no any simple swap but comparison between to sub array
 	void swapmerg(int ind , int val , MyPanel jp) {
 		jp.x = jp.w*ind;
 		jp.h = val;
@@ -106,7 +102,7 @@ public class SortingAlgo {
 		}catch(InterruptedException e) {
 			
 		}
-		jp.h = 300;
+		jp.h = jp.pw;
 		jp.col = Color.black;
 		jp.paintImmediately(0, 0, jp.pw, jp.ph);
 		
