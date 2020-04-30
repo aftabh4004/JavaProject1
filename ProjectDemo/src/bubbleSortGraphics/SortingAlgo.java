@@ -3,6 +3,9 @@ package bubbleSortGraphics;
 import java.awt.Color;
 
 public class SortingAlgo {
+	
+/*****************************************************************************************************************/
+/************************************** Bubble Sort **************************************************************/
 	void bubblesort(Integer[] arr , MyPanel jp) {
 
 		//bubble sort
@@ -19,8 +22,12 @@ public class SortingAlgo {
 		}
 	}
 	
+/***************************************************************************************************************/
 	
+/*****************************************************************************************************************/
+/************************************** MergSort **************************************************************/
 	
+	//Recursive method for merge sort 
 	void mergsort(Integer arr[], int l, int r , MyPanel jp) 
 	{ 
 		if (l < r) 
@@ -32,7 +39,7 @@ public class SortingAlgo {
 			merge(arr, l, m, r ,jp); 
 		} 
 	}
-	
+	//merging
 	private void merge(Integer arr[], int l, int m, int r , MyPanel jp) 
 	{ 
 		
@@ -86,13 +93,8 @@ public class SortingAlgo {
 		} 
 	} 
 	
-	void swapit(Integer[] arr  , int i , int j , MyPanel jp){
-		jp.swap(i*jp.w , arr[i] , j*jp.w , arr[j] );
-		Integer temp = arr[i];
-		arr[i] = arr[j];
-		arr[j] = temp;
-	}
 	
+	//for swap in merge sort , because in merge sort there is no any simple swap
 	void swapmerg(int ind , int val , MyPanel jp) {
 		jp.x = jp.w*ind;
 		jp.h = val;
@@ -114,4 +116,49 @@ public class SortingAlgo {
 		jp.paintImmediately(0, 0, jp.pw, jp.ph);
 		
 	}
+	
+/***************************************************************************************************************/
+	
+/********************************************************************************************************************/
+/************************************** Insertion Sort **************************************************************/
+	
+	void insertion_sort(Integer[] arr , MyPanel jp) {
+		for (int i = 1 ; i < arr.length ; i++) {
+			int j = i;
+			while(j > 0 && arr[j -1] > arr[j]) {
+				swapit(arr , j - 1 , j , jp);
+				j--;
+			}
+		}
+	}
+	
+/********************************************************************************************************************/
+
+/********************************************************************************************************************/
+/************************************** Selection Sort **************************************************************/
+
+	void selection_sort(Integer arr[] , MyPanel jp) 
+    { 
+        int n = arr.length; 
+  
+        for (int i = 0; i < n-1; i++) 
+        { 
+            int min_idx = i; 
+            for (int j = i+1; j < n; j++) 
+                if (arr[j] < arr[min_idx]) 
+                    min_idx = j; 
+  
+         swapit(arr , min_idx , i , jp);
+        } 
+    }
+
+/********************************************************************************************************************/
+	//For common swap
+	void swapit(Integer[] arr  , int i , int j , MyPanel jp){
+		jp.swap(i*jp.w , arr[i] , j*jp.w , arr[j] );
+		Integer temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+	}
+
 }
